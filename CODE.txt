@@ -1,0 +1,606 @@
+Include irvine32.inc
+.data
+filehandle DWORD ?
+filename BYTE "menu.txt", 0
+buffSize =1800
+buffer BYTE buffSize DUP(?) 
+
+cappucino dword 250  ;1
+espresso dword 280   ;2
+orange dword 150     ;3
+drink dword 50       ;4
+toast dword 150      ;5
+cookie dword 200     ;6
+chicken dword 120    ;7
+club dword 170       ;8
+iced  dword 250      ;9
+Frappe dword 300    ;10
+deal_1 dword 500    ;11
+deal_2 dword 500    ;12
+deal_3 dword 300    ;13
+deal_4 dword 300    ;14
+
+array1 byte  "                              Cappucino ................. RS-250/-",0
+array2 byte  "                              Espresso .................. RS-280/-",0
+array3 byte  "                              Orange juice .............. RS-150/-",0
+array4 byte  "                              soft drinks ............... RS-50/-",0
+array5 byte  "                              Frech toast ............... RS-150/-",0
+array6 byte  "                              Cookie .................... RS-200/-",0
+array7 byte  "                              Chicken sandwich .......... RS-120/-",0
+array8 byte  "                              Club sandwich ............. RS-170/-",0
+array9 byte  "                              Iced cofee ............... RS-250/-",0
+array10 byte "                              Frappe latte ............. RS-300/-",0
+array11 byte "                              Enter Quantity: ",0
+array12 byte "                              Total Bill: ",0
+array13 byte  2000 DUP(?)
+array14 byte "                              Total Amount :  ",0
+array15 byte "                              Do you have a Promo code ?",0
+array16 byte "                              1.BOGO..............10% OFF",0
+array17 byte "                              2.VOUCH_365..............20% OFF",0
+array18 byte "                              3.SAVYOUR..............40% OFF",0
+array19 byte "                              4.NO Continue with current bill",0
+array20 byte "                              Total amount is: ",0
+array21 byte "                              Enter choice: ",0
+array22 byte "                              Enter promo code: ",0
+array23 byte "                              Sorry this is not a valid promo code",0
+array24 byte "                              Two cookies + One Cappucino + One chicken Sandwhich.......RS-500/-",0
+array25 byte "                              Two cookies + One Orange juice + One club Sandwhich.......RS-500/-",0
+array26 byte "                              One French Toast + One Cappucino .......................RS-300/-",0
+array27 byte "                              One cookie + One Cappucino .............................RS-300/-",0
+array28 byte "                              ***************Items Selected****************",0
+array29 byte "                              Sorry Invalid choice Press 0 to Choose Again :",0
+array30 byte "                              10 % Tax Amount :  ",0
+array31 byte "                               Amount :  ",0
+amount dword 0
+quantity dword 0
+tax dword 0
+
+BOGO dword 12345
+VOUCH_365 dword 54321
+SAVYOUR dword 5678
+
+.code
+main proc
+mov esi,0
+push esi
+menu:
+call clrscr
+mov eax,0
+mov ebx,0
+mov ecx,0
+mov edx,0
+mov edx,OFFSET filename
+call OpenInputFile
+mov filehandle, EAX
+mov edx, OFFSET buffer 
+mov ecx, buffSize 
+call ReadFromFile
+mov edx, OFFSET buffer
+call writestring
+
+call readint
+cmp eax,1
+je cap
+cmp eax,2
+je ep
+cmp eax,3
+je oran
+cmp eax,4
+je dri
+cmp eax,5
+je toa
+cmp eax,6
+je coo
+cmp eax,7
+je chs
+cmp eax,8
+je clb
+cmp eax,9
+je ic
+cmp eax,10
+je fr
+cmp eax,11
+je deal1
+cmp eax,12
+je deal2
+cmp eax,13
+je deal3
+cmp eax,14
+je deal4
+cmp eax,15
+je bill
+mov edx,offset array29
+call writestring
+mov eax,343
+call readint
+cmp eax,0
+je menu
+
+cap:
+mov edx,OFFSET array1
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mul cappucino
+add amount,eax
+mov edi,0
+mov ecx,lengthof array1
+sub ecx,1
+L1:
+mov bl,array1[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L1
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+call clrscr
+jmp menu
+
+ep:
+mov edx,OFFSET array2
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mul espresso
+add amount,eax
+mov edi,0
+mov ecx,lengthof array2
+sub ecx,1
+L2:
+mov bl,array2[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L2
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+call clrscr
+jmp menu
+
+oran:
+mov edx,OFFSET array3
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mul orange
+add amount,eax
+mov edi,0
+mov ecx,lengthof array3
+sub ecx,1
+L3:
+mov bl,array3[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L3
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+call clrscr
+jmp menu
+
+dri:
+mov edx,OFFSET array4
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mov edi,0
+mov ecx,lengthof array4
+sub ecx,1
+L4:
+mov bl,array4[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L4
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+mul drink
+add amount,eax
+call clrscr
+jmp menu
+
+toa:
+mov edx,OFFSET array5
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mov edi,0
+mov ecx,lengthof array5
+sub ecx,1
+L5:
+mov bl,array5[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L5
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+mul toast
+add amount,eax
+call clrscr
+jmp menu
+
+coo:
+mov edx,OFFSET array6
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mov edi,0
+mov ecx,lengthof array6
+sub ecx,1
+L6:
+mov bl,array6[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L6
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+mul cookie
+add amount,eax
+call clrscr
+jmp menu
+
+chs:
+mov edx,OFFSET array7
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mov edi,0
+mov ecx,lengthof array7
+sub ecx,1
+L7:
+mov bl,array7[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L7
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+mul chicken
+add amount,eax
+call clrscr
+jmp menu
+
+clb:
+mov edx,OFFSET array8
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mov edi,0
+mov ecx,lengthof array8
+sub ecx,1
+L8:
+mov bl,array8[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L8
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+mul club
+add amount,eax
+call clrscr
+jmp menu
+
+ic:
+mov edx,OFFSET array9
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mul iced
+add amount,eax
+mov edi,0
+mov ecx,lengthof array9
+sub ecx,1
+L9:
+mov bl,array9[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L9
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+call clrscr
+jmp menu
+
+fr:
+mov edx,OFFSET array10
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mul frappe
+add amount,eax
+mov edi,0
+mov ecx,lengthof array10
+sub ecx,1
+L10:
+mov bl,array10[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L10
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+call clrscr
+jmp menu
+
+deal1:
+mov edx,OFFSET array24
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mul deal_1
+add amount,eax
+mov edi,0
+mov ecx,lengthof array24
+sub ecx,1
+L24:
+mov bl,array24[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L24
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+call clrscr
+jmp menu
+
+deal2:
+mov edx,OFFSET array25
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mul deal_2
+add amount,eax
+mov edi,0
+mov ecx,lengthof array25
+sub ecx,1
+L25:
+mov bl,array25[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L25
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+call clrscr
+jmp menu
+
+deal3:
+mov edx,OFFSET array26
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mul deal_3
+add amount,eax
+mov edi,0
+mov ecx,lengthof array26
+sub ecx,1
+L26:
+mov bl,array26[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L26
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+call clrscr
+jmp menu
+
+deal4:
+mov edx,OFFSET array27
+call writestring
+call crlf
+mov edx,OFFSET array11
+call writestring
+call readint
+mov quantity,eax
+mul deal_4
+add amount,eax
+mov edi,0
+mov ecx,lengthof array27
+sub ecx,1
+L27:
+mov bl,array27[edi]
+mov array13[esi],bl
+inc esi
+inc edi
+LOOP L27
+mov array13[esi],0Ah
+inc esi
+mov array13[esi],0Ah
+inc esi
+call clrscr
+jmp menu
+
+bill:
+call clrscr
+mov edx,offset array28
+call writestring 
+call crlf
+call crlf
+mov edx,offset array13
+call writestring 
+call crlf
+call crlf
+mov edx,OFFSET array31
+call writestring
+mov eax,amount
+call writedec
+call crlf
+call crlf
+
+mov eax,amount
+mov edx,0
+mov ebx,10
+div ebx
+mov tax,eax
+add amount,eax
+call crlf
+mov edx,offset array30
+call writestring
+call writedec
+call crlf
+call crlf
+mov eax,amount
+add eax,tax
+mov edx,OFFSET array15
+call writestring
+call crlf
+call crlf
+mov edx,OFFSET array16
+call writestring
+call crlf
+call crlf
+mov edx,OFFSET array17
+call writestring
+call crlf
+call crlf
+mov edx,OFFSET array18
+call writestring
+call crlf
+call crlf
+mov edx,OFFSET array19
+call writestring
+call crlf
+call crlf
+mov edx,OFFSET array21
+call writestring
+mov eax,0
+call readint
+cmp eax,1
+je BOG
+cmp eax,2
+je vouch
+cmp eax,3
+je sav
+cmp eax,4
+je ex
+
+BOG:
+call crlf
+mov edx,offset array22
+call writestring
+call readint
+cmp eax,BOGO
+jne sorry
+mov eax,amount
+mov edx,0
+mov ebx,9
+mul ebx
+mov ebx,10
+div ebx
+mov amount,eax
+jmp ex
+
+vouch:
+call crlf
+mov edx,offset array22
+call writestring
+call readint
+cmp eax,VOUCH_365
+jne sorry
+mov eax,amount
+mov edx,0
+mov ebx,8
+mul ebx
+mov ebx,10
+div ebx
+mov amount,eax
+jmp ex
+
+sav:
+call crlf
+mov edx,offset array22
+call writestring
+call readint
+cmp eax,SAVYOUR
+jne sorry
+mov eax,amount
+mov edx,0
+mov ebx,6
+mul ebx
+mov ebx,10
+div ebx
+mov amount,eax
+jmp ex
+sorry:
+call crlf
+mov edx,offset array23
+call writestring
+ex:
+call crlf
+mov eax,amount
+mov edx,offset array20
+call writestring
+call writedec
+exit
+main endp
+end main

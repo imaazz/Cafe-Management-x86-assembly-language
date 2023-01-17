@@ -1,0 +1,39 @@
+
+					                 **** TRIO CAFE MENU ****
+					                 -----------------------
+	
+			HOT BEVERAGES:                                      DEALS:
+			``````````````                                      -----
+			(1) Cappucino ................. RS-250/-            (11) Two cookies + One Cappucino + One chicken Sandwhich.......RS-500/-
+			(2) Espresso .................. RS-280/-                  
+			_______________                                         
+		
+			COLD BEVERAGES:
+			``````````````                                     
+			(3) Orange juice .............. RS-150/-            (12) Two cookies + One Orange juice + One club Sandwhich.......RS-500/-
+			(4) Soft drinks ............... RS-50/-
+			_______________
+			
+			BITES:
+			------
+			BAKED GOODS:                                        (13) One French Toast + One Cappucino .......................RS-300/-
+			````````````
+			(5) French toast ............... RS-150/-
+			(6) Cookie .................... RS-200/-
+			_______________
+			
+			HOT FOODS:                                          (14) One cookie + One Cappucino .............................RS-300/-
+			``````````
+			(7) Chicken sandwich .......... RS-120/-
+			(8) Club sandwich ............. RS-170/-
+			_______________
+		
+			ICED:
+			`````
+			(9) Iced cofee ............... RS-250/-
+			(10) Frappe latte ............. RS-300/-
+			_______________
+
+                                                                          EXIT: Press 15
+
+                                                                          Add Items:
